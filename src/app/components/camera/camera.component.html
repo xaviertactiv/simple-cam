@@ -1,0 +1,26 @@
+<div class="position-relative">
+    <input 
+        #camera
+        hidden 
+        type="file" 
+        capture="environment"
+        (change)="handleChange($event)" 
+        accept="image/*"/>
+    <figure [class]="filter">
+        <img 
+        class="w-100 vh-100" 
+        *ngIf="imageData"
+        [style.objectFit]="'cover'" 
+        [src]="imageData">
+    </figure>
+    
+    <div class="position-fixed w-100 d-flex justify-content-end p-4" style="top: 0px;">
+        <button class="btn btn-primary" (click)="openFilter = !openFilter">
+            {{openFilter ? 'Close Filter': 'Filter'}}
+        </button>
+    </div>
+
+    <div *ngIf="imageData && openFilter" class="position-fixed w-100" style="bottom: 0px;">
+        <app-filters [img]="imageData" (selectedFilter)="handleApplyFilter($event)"></app-filters>
+    </div>
+</div>
